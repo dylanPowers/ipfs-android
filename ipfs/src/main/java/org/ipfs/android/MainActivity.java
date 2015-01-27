@@ -56,9 +56,13 @@ public class MainActivity extends ActionBarActivity {
     private void handleIntent(Intent intent) {
         Uri uri = intent.getData();
         if (uri != null && uri.getScheme().equals("ipfs")) {
-            String hashPath = uri.getPath();
-            hashPath = hashPath.substring(1);
-            hashPath += "#" + uri.getFragment();
+            String hashPath = uri.getSchemeSpecificPart();
+            hashPath = hashPath.substring(2); // Remove leading '//'
+
+            if (uri.getFragment() != null) {
+                hashPath += "#" + uri.getFragment();
+            }
+
             ((TextView) findViewById(R.id.hash)).setText(hashPath);
 
             launchBrowser(hashPath);
