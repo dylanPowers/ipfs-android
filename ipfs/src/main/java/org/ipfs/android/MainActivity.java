@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -46,17 +47,25 @@ public class MainActivity extends ActionBarActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Uri uri = intent.getData();
-        Log.d("ipfs", "New intent! ");
         if (uri != null && uri.getScheme().equals("ipfs")) {
-            String fileHash = uri.getPath();
-            Log.d("ipfs", fileHash);
-            ((TextView) findViewById(R.id.hash)).setText(fileHash);
+            String hashPath = uri.getPath();
+            hashPath = hashPath.substring(1);
+            hashPath += "#" + uri.getFragment();
+            ((TextView) findViewById(R.id.hash)).setText(hashPath);
 
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_VIEW);
-            String url = "http://gateway.ipfs.io/ipfs/" + fileHash;
-            sendIntent.setData(Uri.parse(url));
-            startActivity(sendIntent);
+            launchBrowser(hashPath);
         }
+    }
+
+    public void hashButtonOnClick(View view) {
+        launchBrowser(((TextView) findViewById(R.id.hash)).getText().toString());
+    }
+
+    private void launchBrowser(String hashPath) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_VIEW);
+        String url = "http://gateway.ipfs.io/ipfs/" + hashPath;
+        sendIntent.setData(Uri.parse(url));
+        startActivity(sendIntent);
     }
 }

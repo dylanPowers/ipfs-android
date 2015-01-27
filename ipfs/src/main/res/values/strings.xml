@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">IPFS</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hash_button">Get</string>
+    <string name="hash_input_hint">&lt;hash&gt;[/&lt;path&gt;]</string>
     <string name="action_settings">Settings</string>
 
 </resources>
