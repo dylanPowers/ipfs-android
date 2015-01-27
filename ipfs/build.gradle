@@ -26,10 +26,16 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(System.getenv("KEY_STORE_FILE"))
-            storePassword System.getenv("KEY_STORE_PASSWORD")
-            keyAlias System.getenv("KEY_ALIAS")
-            keyPassword System.getenv("KEY_PASSWORD")
+            if (System.getenv("KEY_STORE_FILE") != null ||
+                System.getenv("KEY_STORE_PASSWORD") != null ||
+                System.getenv("KEY_ALIAS") != null ||
+                System.getenv("KEY_PASSWORD") != null) {
+
+                storeFile file(System.getenv("KEY_STORE_FILE"))
+                storePassword System.getenv("KEY_STORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+            }
         }
     }
 
