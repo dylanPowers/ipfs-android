@@ -17,8 +17,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        handleIntent(getIntent());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,6 +46,14 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    public void hashButtonOnClick(View view) {
+        launchBrowser(((TextView) findViewById(R.id.hash)).getText().toString());
+    }
+
+    private void handleIntent(Intent intent) {
         Uri uri = intent.getData();
         if (uri != null && uri.getScheme().equals("ipfs")) {
             String hashPath = uri.getPath();
@@ -55,10 +63,6 @@ public class MainActivity extends ActionBarActivity {
 
             launchBrowser(hashPath);
         }
-    }
-
-    public void hashButtonOnClick(View view) {
-        launchBrowser(((TextView) findViewById(R.id.hash)).getText().toString());
     }
 
     private void launchBrowser(String hashPath) {
