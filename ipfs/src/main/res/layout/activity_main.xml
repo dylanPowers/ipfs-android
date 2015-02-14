@@ -9,16 +9,31 @@
                 tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/hash"
-        android:hint="@string/hash_input_hint"
+        android:id="@+id/ipfs_hash"
+        android:hint="@string/ipfs_hash_input_hint"
         android:inputType="text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
     <Button
-        android:layout_below="@+id/hash"
+        android:id="@+id/ipfs_hash_button"
+        android:layout_below="@+id/ipfs_hash"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/hash_button"
-        android:onClick="hashButtonOnClick" />
+        android:text="@string/ipfs_hash_button"
+        android:onClick="ipfsHashButtonOnClick" />
+    <EditText
+        android:id="@+id/ipns_hash"
+        android:hint="@string/ipns_hash_input_hint"
+        android:inputType="text"
+        android:layout_below="@+id/ipfs_hash_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_below="@id/ipns_hash"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ipns_hash_button"
+        android:onClick="ipnsHashButtonClick"/>
 </RelativeLayout>

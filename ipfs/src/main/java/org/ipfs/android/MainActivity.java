@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,38 +41,60 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         handleIntent(intent);
     }
 
-    public void hashButtonOnClick(View view) {
-        launchBrowser(((TextView) findViewById(R.id.hash)).getText().toString());
+    public void ipfsHashButtonOnClick(View view) {
+        TextView ipfsTextView = (TextView) findViewById(R.id.ipfs_hash);
+        launchBrowser(ipfsTextView.getText().toString(), Scheme.IPFS);
+    }
+
+    public void ipnsHashButtonClick(View view) {
+        TextView ipnsTextView = (TextView) findViewById(R.id.ipns_hash);
+        launchBrowser(ipnsTextView.getText().toString(), Scheme.IPNS);
     }
 
     private void handleIntent(Intent intent) {
         Uri uri = intent.getData();
-        if (uri != null && uri.getScheme().equals("ipfs")) {
-            String hashPath = uri.getSchemeSpecificPart();
-            hashPath = hashPath.substring(2); // Remove leading '//'
-
-            if (uri.getFragment() != null) {
-                hashPath += "#" + uri.getFragment();
+        if (uri != null) {
+            String hashPath = parseHashPath(uri);
+            ((TextView) findViewById(R.id.ipfs_hash)).setText(hashPath);
+            if (uri.getScheme().equals("ipfs")) {
+                launchBrowser(hashPath, Scheme.IPFS);
+            } else if (uri.getScheme().equals("ipns")) {
+                launchBrowser(hashPath, Scheme.IPNS);
             }
-
-            ((TextView) findViewById(R.id.hash)).setText(hashPath);
-
-            launchBrowser(hashPath);
         }
     }
 
-    private void launchBrowser(String hashPath) {
+    private void launchBrowser(String hashPath, Scheme scheme) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_VIEW);
-        String url = "http://gateway.ipfs.io/ipfs/" + hashPath;
+        String url = "http://gateway.ipfs.io/";
+        if (scheme == Scheme.IPFS) {
+            url += "ipfs/";
+        } else {
+            url += "ipns/";
+        }
+        url += hashPath;
         sendIntent.setData(Uri.parse(url));
         startActivity(sendIntent);
+    }
+
+    private String parseHashPath(Uri uri) {
+        String hashPath = uri.getSchemeSpecificPart();
+        hashPath = hashPath.substring(2); // Remove leading '//'
+
+        if (uri.getFragment() != null) {
+            hashPath += "#" + uri.getFragment();
+        }
+        return hashPath;
+    }
+
+    private enum Scheme {
+        IPFS, IPNS
     }
 }
