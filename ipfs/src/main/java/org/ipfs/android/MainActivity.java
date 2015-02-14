@@ -61,10 +61,11 @@ public class MainActivity extends ActionBarActivity {
         Uri uri = intent.getData();
         if (uri != null) {
             String hashPath = parseHashPath(uri);
-            ((TextView) findViewById(R.id.ipfs_hash)).setText(hashPath);
             if (uri.getScheme().equals("ipfs")) {
+                ((TextView) findViewById(R.id.ipfs_hash)).setText(hashPath);
                 launchBrowser(hashPath, Scheme.IPFS);
             } else if (uri.getScheme().equals("ipns")) {
+                ((TextView) findViewById(R.id.ipns_hash)).setText(hashPath);
                 launchBrowser(hashPath, Scheme.IPNS);
             }
         }
