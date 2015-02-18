@@ -5,4 +5,4 @@
 .DS_Store
 /build
 
-build-release.sh
+release.sh

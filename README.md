@@ -3,7 +3,7 @@ Release Build Instructions
 
 To do a release, some environment variables must be set to do the signing.
 The simplest way to configure this is to create a script called
-```build-release.sh``` with the following contents:
+```release.sh``` with the following contents:
 ```
 export KEY_STORE_FILE=<keystore>
 export KEY_STORE_PASSWORD=<pass>
