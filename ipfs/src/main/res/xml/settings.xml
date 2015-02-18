@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="@string/pref_serverHostname_default"
+        android:inputType="textUri"
+        android:key="@string/pref_serverHostname_key"
+        android:summary="@string/pref_serverHostname_summ"
+        android:title="@string/pref_serverHostname_title" />
+</PreferenceScreen>

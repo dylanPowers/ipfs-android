@@ -1,7 +1,10 @@
 package org.ipfs.android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,11 +14,14 @@ import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
+    private SharedPreferences mPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         handleIntent(getIntent());
     }
 
@@ -35,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
@@ -74,11 +81,18 @@ public class MainActivity extends ActionBarActivity {
     private void launchBrowser(String hashPath, Scheme scheme) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_VIEW);
-        String url = "http://gateway.ipfs.io/";
+        String hostnamePrefKey = getString(R.string.pref_serverHostname_key);
+
+        String hostname = PreferenceManager.getDefaultSharedPreferences(this).getString(hostnamePrefKey, null /* It exists */);
+        if (hostname == null) {
+            throw new RuntimeException("The world is ending!!!!");
+        }
+
+        String url = "http://" + hostname;
         if (scheme == Scheme.IPFS) {
-            url += "ipfs/";
+            url += "/ipfs/";
         } else {
-            url += "ipns/";
+            url += "/ipns/";
         }
         url += hashPath;
         sendIntent.setData(Uri.parse(url));

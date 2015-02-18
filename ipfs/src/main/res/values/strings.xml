@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="action_settings">Settings</string>
     <string name="app_name">IPFS</string>
     <string name="ipfs_hash_button">Get IPFS</string>
     <string name="ipfs_hash_input_hint">&lt;ipfs hash&gt;[/&lt;path&gt;]</string>
     <string name="ipns_hash_button">Get IPNS</string>
     <string name="ipns_hash_input_hint">&lt;ipns hash&gt;</string>
-    <string name="action_settings">Settings</string>
-
+    <string name="pref_serverHostname_default">gateway.ipfs.io</string>
+    <string name="pref_serverHostname_key">serverHostname</string>
+    <string name="pref_serverHostname_title">Server Hostname</string>
+    <string name="pref_serverHostname_summ">The server to use for ipfs/ipns requests</string>
+    <string name="settings_activity_name">Settings</string>
 </resources>

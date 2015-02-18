@@ -30,6 +30,15 @@
                 <data android:scheme="ipns" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:label="@string/settings_activity_name"
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.ipfs.android.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
